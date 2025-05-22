@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,18 +37,17 @@ public class PatientServiceTest {
         Patient result = patientService.getPatientById(101);
 
         assertNotNull(result);
-        assertEquals("Alice", result.getPatient_name());
+        assertEquals(samplePatient, result);
         verify(patientRepository, times(1)).findById(101);
     }
 
     @Test
     void testGetPatientById_NotFound() {
         when(patientRepository.findById(999)).thenReturn(Optional.empty());
-
-        Exception exception = assertThrows(RuntimeException.class, () -> {
+        Patient result = patientService.getPatientById(999);
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             patientService.getPatientById(999);
         });
-
         assertEquals("Patient not found", exception.getMessage());
     }
 

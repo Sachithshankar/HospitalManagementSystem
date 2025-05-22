@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+
 @Service
 public class PatientService {
     @Autowired
-     final PatientRepository patientRepository;
+    final PatientRepository patientRepository;
     private static final Logger log = LoggerFactory.getLogger(PatientService.class);
 
     public PatientService(PatientRepository patientRepository) {
@@ -23,9 +25,9 @@ public class PatientService {
         return patientRepository.findAll();
     }
 
-    public Patient getPatientById(int patient_id) {
+    public Patient getPatientById(int patient_id) throws NoSuchElementException {
         log.info("Getting patient with id {}", patient_id);
-            return patientRepository.findById(patient_id).orElse(null);
+            return patientRepository.findById(patient_id).orElseThrow(() -> new NoSuchElementException("Patient not found"));
     }
 
     public Patient createPatient(@RequestBody Patient patient){

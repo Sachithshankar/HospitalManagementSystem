@@ -2,7 +2,6 @@ package com.daada.hospitalmanagementmavenproject.controller;
 
 import com.daada.hospitalmanagementmavenproject.entity.Patient;
 import com.daada.hospitalmanagementmavenproject.service.PatientService;
-import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
